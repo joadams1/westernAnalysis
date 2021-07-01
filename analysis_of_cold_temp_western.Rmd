@@ -53,10 +53,22 @@ rpoSData2 <- read_excel("Cold Shock 6_16 Better/ShapesTableExportBlot_2021-06-29
 blotData2 <- normalizeSingleBlot(normalizationData2, rpoSData2)
 ```
 
+```{r}
+normalizationData3 <- read_excel("Cold Shock 6_21/ShapesTableExportRevert_2021-06-30.xls")
+rpoSData3 <- read_excel("Cold Shock 6_21/ShapesTableExportBlot_21_2021-06-30.xls")
+blotData3 <- normalizeSingleBlot(normalizationData3, rpoSData3)
+```
+
+```{r}
+normalizationData4 <- read_excel("Cold Shock 6_25/ShapesTableExportRevert_2021-06-30.xls")
+rpoSData4 <- read_excel("Cold Shock 6_25/ShapesTableExportBlot_25_2021-06-30.xls")
+blotData4 <- normalizeSingleBlot(normalizationData4, rpoSData4)
+```
+
 ## Combine multiple blots
 ```{r}
 
-all_blot_data <- bind_rows(blotData1, blotData2)
+all_blot_data <- bind_rows(blotData1, blotData2, blotData3, blotData4)
 
 
 ```
@@ -68,7 +80,8 @@ The exact plot you need to do will depend on the specifics of your experiment. H
 ```{r}
 all_blot_data %>% 
   filter(Strain == "wt") %>% 
-  ggplot(aes(x = Time, y = RpoSratio, color = date)) +
+#  mutate(Date = as_factor(Date)) %>%
+  ggplot(aes(x = Time, y = RpoSratio, colour = Date)) +
   geom_point()
 ```
 
