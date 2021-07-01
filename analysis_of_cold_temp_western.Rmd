@@ -68,7 +68,11 @@ blotData4 <- normalizeSingleBlot(normalizationData4, rpoSData4)
 ## Combine multiple blots
 ```{r}
 
-all_blot_data <- bind_rows(blotData1, blotData2, blotData3, blotData4)
+all_blot_data <- bind_rows(blotData1, blotData2, blotData3, blotData4) %>% 
+  mutate(Date = as.factor(Date))
+
+new_blot_data <- all_blot_data %>% group_by(Date) %>%
+  mutate(corrected_rpos = RpoSratio/max(RpoSratio))
 
 
 ```
@@ -78,11 +82,12 @@ all_blot_data <- bind_rows(blotData1, blotData2, blotData3, blotData4)
 The exact plot you need to do will depend on the specifics of your experiment. Here is an example from this experiment.
 
 ```{r}
-all_blot_data %>% 
+new_blot_data %>% 
   filter(Strain == "wt") %>% 
 #  mutate(Date = as_factor(Date)) %>%
-  ggplot(aes(x = Time, y = RpoSratio, colour = Date)) +
-  geom_point()
+  ggplot(aes(x = Time, y = corrected_rpos)) +
+  geom_point(aes( colour = Date)) +
+  geom_smooth()
 ```
 
 
