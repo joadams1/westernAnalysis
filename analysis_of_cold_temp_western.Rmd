@@ -84,7 +84,6 @@ The exact plot you need to do will depend on the specifics of your experiment. H
 ```{r}
 new_blot_data %>% 
   filter(Strain == "wt") %>% 
-#  mutate(Date = as_factor(Date)) %>%
   ggplot(aes(x = Time, y = corrected_rpos)) +
   geom_point(aes( colour = Date)) +
   geom_smooth()
