@@ -8,7 +8,7 @@ output:
 ---
 These notes are written for Stoebel Lab quantification of RpoS blots. You may need to work with Dan to modify the standards or code below for your specific work. In particular the code was written with one independent variable in mind. (I.e. one strain at many time points, one strain at many RpoS levels, or many strains at one time point.) If you've got something more complicated, we can modify things.
 
-##Setting up your data
+## Setting up your data
 
 For **each** western blot, create a folder. The folder name should include the date that the blot was done on, and it should match the date entry in your lab notebook so that we can go back and doublecheck specifics of the experiment. This folder should contain the following: 
 
@@ -83,19 +83,12 @@ The exact plot you need to do will depend on the specifics of your experiment. H
 
 ```{r}
 new_blot_data %>% 
-  filter(Strain == "wt") %>% 
-<<<<<<< HEAD
-=======
+  filter(Strain == "wt") %>%
 #  mutate(Date = as_factor(Date)) %>%
->>>>>>> 2d967a629f863e6cd0336977dff10a5819fb700d
   ggplot(aes(x = Time, y = corrected_rpos)) +
   geom_point(aes( colour = Date)) +
   geom_smooth()
 ```
-
-
-
-
 ```{r}
 # 
 # blotData$`Strain Name` <- factor(blotData$`Strain Name`, levels = blotData$`Strain Name`) #Makes strain name a factor, with the levels in the order given in the origional file, which was useful for this experiment.
