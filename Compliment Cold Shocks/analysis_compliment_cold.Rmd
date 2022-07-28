@@ -1,0 +1,46 @@
+---
+title: "analysis of compliment cold shocks"
+author: "Josephine Adams"
+date: "28/07/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(readxl)
+library(tidyverse)
+source("../westernHelperFunctions.R")
+```
+
+import data
+```{r}
+normalizationData21 <- read_excel("6_21/ShapesTableExportRevert_6_21_22.xls")
+rpoSData21 <- read_excel("6_21/ShapesTableExportBlot_6_21_22.xls")
+
+normalizationData22 <- read_excel("6_22/ShapesTableExportRevert_6_22_22.xls")
+rpoSData22 <- read_excel("6_22/ShapesTableExportBlot_6_22_22.xls")
+```
+
+normalize RpoS levels
+```{r}
+blotData21 <- normalizeSingleBlot(normalizationData21, rpoSData21)
+blotData22 <- normalizeSingleBlot(normalizationData22, rpoSData22)
+
+all_blot_data <- bind_rows(blotData21, blotData22) 
+```
+
+graph
+```{r}
+all_blot_data %>%
+  ggplot(aes(x = Time, y = RpoSratio)) +
+  geom_point() +
+  stat_summary(fun.y = "mean", colour = "blue") +
+  facet_wrap(~ Genotype) + 
+  xlab("Time(mins)") +
+  ylab("Normalized RpoS")
+
+ggsave("comp_plots.jpeg")
+```
+
+
+
